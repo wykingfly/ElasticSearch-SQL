@@ -1,0 +1,134 @@
+
+select sum(price),count(1),ds(day),gender,agerange
+from payment 
+where ( (price between 1 and 10000) and userid not in('0','1','2','3','4') and location='beijing' ) or ( is_pre=1 )
+group by age(0-20,20-30,30-40,40-50,50-100),gender,ds(day)
+order by sum(price) desc,count(1) desc;
+
+
+
+curl -XPOST 'localhost:9200/bank/_search?pretty' -d '  
+{  
+  "query": {  
+    "filtered": {  
+      "query": { "match_all": {} },  
+      "filter": {
+        "bool":{
+          "should":[
+            {
+              "bool":{
+                "must":[
+                  {
+                   "range":{
+                     "price":{
+                        "gte":1,
+                        "lte":10000
+                      }
+                    }
+                  },
+                  {
+                   "match":{"location":"beijing"}
+                  }
+                ]
+                "must_not":[
+                  {"match":{"userid":"0"}},
+                  {"match":{"userid":"1"}},
+                  {"match":{"userid":"2"}},
+                  {"match":{"userid":"3"}},
+                  {"match":{"userid":"4"}}
+                ]
+               }
+            },
+            {"match":{"is_pre":"1"}}
+          ]
+        }
+        "aggs":{
+           "group_by_age":{
+              "range":{
+                "field":"age",
+                "ranges":[
+                   {"from":0,"to":20},
+                   {"from":20,"to":30},
+                   {"from":30,"to":40},
+                   {"from":40,"to":50},
+                   {"from":50,"to":100}
+                ]
+              },
+              "aggs":{
+                "group_by_gender":{
+                   "trems":{
+                      "field":"gender"
+                   }
+                }
+              }
+           }
+        } 
+        "sort": { "balance": { "gender": "desc" } }  
+      }  
+    }  
+  }  
+}
+
+
+
+------------------------------------------------------------------------------------------
+curl -XPOST 'localhost:9200/bank/_search?pretty' -d '  
+{  
+  "query": {  
+    "filtered": {  
+      "query": { "match_all": {} },  
+      "filter": {
+        "bool":{
+          "should":[
+            {
+              "bool":{
+                "must":[
+                  {
+                   "range":{
+                     "price":{
+                        "gte":1,
+                        "lte":10000
+                      }
+                    }
+                  },
+                  {
+                   "match":{"location":"beijing"}
+                  }
+                ]
+                "must_not":[
+                  {"match":{"userid":"0"}},
+                  {"match":{"userid":"1"}},
+                  {"match":{"userid":"2"}},
+                  {"match":{"userid":"3"}},
+                  {"match":{"userid":"4"}}
+                ]
+               }
+            },
+            {"match":{"is_pre":"1"}}
+          ]
+        }
+        "facets":{
+           "range1":{
+              "range":{
+                "age":[
+                   {"from":0,"to":20},
+                   {"from":20,"to":30},
+                   {"from":30,"to":40},
+                   {"from":40,"to":50},
+                   {"from":50,"to":100}
+                ]
+              },
+              "aggs":{
+                "group_by_gender":{
+                   "trems":{
+                      "field":"gender"
+                   }
+                }
+              }
+           }
+        } 
+        "sort": { "balance": { "gender": "desc" } }  
+      }  
+    }  
+  }  
+}
