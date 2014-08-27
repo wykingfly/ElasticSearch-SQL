@@ -5,6 +5,11 @@ import java.util.Map;
 
 import com.es.sql.util.CommonConstant.DataType;
 
+/**
+ * 工具类
+ * @author wangyong
+ *
+ */
 public class CommonUtils {
 
 	/**

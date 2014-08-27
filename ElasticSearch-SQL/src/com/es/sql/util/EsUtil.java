@@ -6,6 +6,11 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
+/**
+ * elasticsearch 工具类
+ * @author wangyong
+ *
+ */
 public class EsUtil {
 
 	private static Client client;

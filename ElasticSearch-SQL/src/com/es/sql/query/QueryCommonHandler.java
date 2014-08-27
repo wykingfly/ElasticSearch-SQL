@@ -18,6 +18,11 @@ import com.es.sql.util.CommonConstant.Operator;
 import com.es.sql.util.CommonUtils;
 import com.es.sql.util.RegexCheck;
 
+/**
+ * 普通query查询处理
+ * @author wangyong
+ *
+ */
 public class QueryCommonHandler {
 
 	

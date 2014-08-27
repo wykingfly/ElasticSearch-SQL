@@ -7,6 +7,11 @@ import org.apache.commons.lang.StringUtils;
 
 import com.es.sql.parse.QuerySqlParser;
 
+/**
+ * group 语法检查
+ * @author wangyong
+ *
+ */
 public class SyntaxCheck {
 
 	/**

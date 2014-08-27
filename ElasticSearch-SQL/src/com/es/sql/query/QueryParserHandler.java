@@ -20,6 +20,11 @@ import com.es.sql.util.EsUtil;
 import com.es.sql.util.CommonConstant.DataType;
 import com.es.sql.util.CommonConstant.Operator;
 
+/**
+ * Api入口
+ * @author wangyong
+ *
+ */
 public class QueryParserHandler {
 
 	

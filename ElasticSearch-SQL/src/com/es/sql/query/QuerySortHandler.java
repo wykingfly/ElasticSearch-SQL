@@ -10,6 +10,11 @@ import org.elasticsearch.search.sort.SortOrder;
 
 import com.es.sql.parse.QuerySqlParser;
 
+/**
+ * 构建sort
+ * @author wangyong
+ *
+ */
 public class QuerySortHandler {
 
 	/**

@@ -1,5 +1,9 @@
 package com.es.sql.util;
-
+/**
+ * Test Class
+ * @author wangyong
+ *
+ */
 public class Test {
 
 	/**

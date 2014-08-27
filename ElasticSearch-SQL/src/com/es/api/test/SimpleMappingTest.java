@@ -10,6 +10,11 @@ import org.elasticsearch.index.query.QueryStringQueryBuilder;
 
 import com.es.sql.util.EsUtil;
 
+/**
+ * 创建index mapping测试
+ * @author wangyong
+ *
+ */
 public class SimpleMappingTest {
 
 	/**

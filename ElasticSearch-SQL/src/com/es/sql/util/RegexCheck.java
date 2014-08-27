@@ -5,6 +5,11 @@ import java.util.regex.Pattern;
 
 import com.es.sql.util.CommonConstant.DataType;
 
+/**
+ * 正则验证
+ * @author wangyong
+ *
+ */
 public class RegexCheck {
 
 	/**

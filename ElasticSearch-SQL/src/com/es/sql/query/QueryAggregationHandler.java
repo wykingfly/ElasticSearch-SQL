@@ -10,6 +10,11 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 
 import com.es.sql.parse.QuerySqlParser;
 
+/**
+ * 聚合处理
+ * @author wangyong
+ *
+ */
 public class QueryAggregationHandler {
 
 	private enum Operation{

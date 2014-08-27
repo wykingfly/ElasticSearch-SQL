@@ -12,6 +12,11 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 
 import com.es.sql.util.EsUtil;
 
+/**
+ * 测试数据
+ * @author wangyong
+ *
+ */
 public class BankContentIndex {
 
 	/**

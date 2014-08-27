@@ -8,6 +8,11 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 
 import com.es.sql.util.EsUtil;
 
+/**
+ * 项目测试对应的测试index
+ * @author wangyong
+ *
+ */
 public class BankMapping {
 
 	/**

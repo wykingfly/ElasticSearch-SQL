@@ -1,5 +1,10 @@
 package com.es.sql.util;
 
+/**
+ * 基础类
+ * @author wangyong
+ *
+ */
 public class CommonConstant {
 
 	public enum Operator{

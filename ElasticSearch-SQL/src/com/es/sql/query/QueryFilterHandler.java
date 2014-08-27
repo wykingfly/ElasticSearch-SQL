@@ -17,6 +17,11 @@ import com.es.sql.util.CommonConstant.Operator;
 import com.es.sql.util.CommonUtils;
 import com.es.sql.util.RegexCheck;
 
+/**
+ * filter查询
+ * @author wangyong
+ *
+ */
 public class QueryFilterHandler {
 
 	

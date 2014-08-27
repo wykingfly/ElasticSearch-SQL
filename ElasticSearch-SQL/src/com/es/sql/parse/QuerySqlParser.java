@@ -3,6 +3,11 @@ package com.es.sql.parse;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * sql语句解析器
+ * @author wangyong
+ *
+ */
 public class QuerySqlParser {
 
 	private  String selectCol;

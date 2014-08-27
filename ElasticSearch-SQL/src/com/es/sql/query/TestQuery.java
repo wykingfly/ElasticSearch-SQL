@@ -35,6 +35,11 @@ import org.junit.Test;
 
 import com.es.sql.util.EsUtil;
 
+/**
+ * 原始elasticsearch java api 查询验证
+ * @author wangyong
+ *
+ */
 public class TestQuery {
 
 	/**
