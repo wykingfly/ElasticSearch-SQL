@@ -29,3 +29,16 @@ ElasticSearch-SQL
 		//String sql = "query:select * from bank where gender='M' and (age>=30 and age<35)";
 		//String sql = "select sum(who.s) from events where context.channlid.s in(1,2,3,4) and context.serverid.s in('s1','s2') and what.s='item' group by context.serverid.s";
 		//String sql = "select * from bank.account order by age desc,account_number asc";
+		//------------------------------------------------------------------------------
+		//String sql = "select stats(balance) from bank.account group by age";
+		
+		//String sql = "select stats(balance) from bank.account group by state,age[*-20|20-25|25-30|30-35|35-40|40-*]";
+		
+		//String sql = "select stats(balance) from bank.account group by (age[*-20|20-25|25-30|30-35|35-40|40-*]),(state)";
+		
+		//String sql = "select stats(balance) from bank.account group by (state,age[*-20|20-25|25-30|30-35|35-40|40-*]),(city)";
+		
+		//String sql = "select account_number,age,balance from bank where age>25";
+		
+		//String sql = "select account_number,age,balance from bank where age>25 order by balance desc";
+		
