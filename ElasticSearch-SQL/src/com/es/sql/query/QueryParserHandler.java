@@ -56,10 +56,22 @@ public class QueryParserHandler {
 		
 		//对多index支持，对sort排序测试，
 		//String sql = "select * from bank.account order by age desc,account_number asc";
-		String sql = "select age,sum(balance) from bank.account group by age order by age desc";
+		//String sql = "select age,sum(balance) from bank.account group by age order by age desc";
 		
+		//------------------------------------------------------------------------------
+		//String sql = "select stats(balance) from bank.account group by age";
 		
+		//String sql = "select stats(balance) from bank.account group by state,age[*-20|20-25|25-30|30-35|35-40|40-*]";
 		
+		//String sql = "select stats(balance) from bank.account group by (age[*-20|20-25|25-30|30-35|35-40|40-*]),(state)";
+		
+		//String sql = "select stats(balance) from bank.account group by (state,age[*-20|20-25|25-30|30-35|35-40|40-*]),(city)";
+		
+		//String sql = "select account_number,age,balance from bank where age>25";
+		
+		//String sql = "select account_number,age,balance from bank where age>25 order by balance desc";
+		
+		String sql = "";
 		
 		//指定输出段，
 		//对dateHistogram/Histogram直方图的支持,对query/filter分离查询
@@ -184,15 +196,38 @@ public class QueryParserHandler {
 				}
 			}
 			String[] index = indexBuffer.toString().substring(0,(indexBuffer.toString().length()-"\001".length())).split("\001");
-			String[] type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
 			
-			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index)).setTypes(CommonUtils.trimStrings(type));
+			String[] type = null;
+			if(typeBuffer.toString().length()>0){
+				type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
+			}
+			
+			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index));
+			if(type!=null && type.length>0){
+				sqb.setTypes(CommonUtils.trimStrings(type));
+			}
+			
 			if(queryBuilder!=null){
 				sqb.setQuery(queryBuilder);
 			}
 			
-			searchResponse = sqb.execute().actionGet();
 			
+			String select = qsp.getSelectCol().trim();
+			String[] fields = null;
+			if(StringUtils.isNotEmpty(select)){
+				if(select.length()==1 && select.indexOf("*")>0){//select * from 。。。
+					
+				}else{
+					fields = select.split(",");
+					
+				}
+				
+			}
+			if(fields!=null && fields.length>0){
+				searchResponse = sqb.execute().actionGet();
+			}else{
+				searchResponse = sqb.addFields(fields).execute().actionGet();
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -242,10 +277,15 @@ public class QueryParserHandler {
 				}
 			}
 			String[] index = indexBuffer.toString().substring(0,(indexBuffer.toString().length()-"\001".length())).split("\001");
-			String[] type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
+			String[] type = null;
+			if(typeBuffer.toString().length()>0){
+				type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
+			}
 			
-			
-			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index)).setTypes(CommonUtils.trimStrings(type));
+			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index));
+			if(type!=null && type.length>0){
+				sqb.setTypes(CommonUtils.trimStrings(type));
+			}
 			if(queryBuilder!=null){
 				sqb.setQuery(queryBuilder);
 			}
@@ -253,6 +293,21 @@ public class QueryParserHandler {
 				for(SortBuilder sBuilder:list){
 					sqb.addSort(sBuilder);
 				}
+			}
+			
+			String select = qsp.getSelectCol().trim();
+			String[] fields = null;
+			if(StringUtils.isNotEmpty(select)){
+				if(select.length()==1 && select.indexOf("*")>0){//select * from 。。。
+					
+				}else{
+					fields = select.split(",");
+					
+				}
+				
+			}
+			if(fields!=null && fields.length>0){
+				sqb.addFields(fields);
 			}
 			
 			sqb.setFrom(start).setSize(size);
@@ -322,10 +377,15 @@ public class QueryParserHandler {
 				}
 			}
 			String[] index = indexBuffer.toString().substring(0,(indexBuffer.toString().length()-"\001".length())).split("\001");
-			String[] type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
+			String[] type = null;
+			if(typeBuffer.toString().length()>0){
+				type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
+			}
 			
-			
-			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index)).setTypes(CommonUtils.trimStrings(type));
+			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index));
+			if(type!=null && type.length>0){
+				sqb.setTypes(CommonUtils.trimStrings(type));
+			}
 			/*if(filterBuilder!=null){
 				sqb.setPostFilter(filterBuilder);
 			}*/

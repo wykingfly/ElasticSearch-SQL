@@ -49,7 +49,7 @@ public class SyntaxCheck {
 						list.add(s.trim());
 						break;
 					}else{
-						if(s.trim().startsWith("count(") || s.trim().startsWith("sum(") || s.trim().startsWith("avg(") || s.trim().startsWith("max(") || s.trim().startsWith("min(")){
+						if(s.trim().startsWith("count(") || s.trim().startsWith("sum(") || s.trim().startsWith("avg(") || s.trim().startsWith("max(") || s.trim().startsWith("min(")|| s.trim().startsWith("stats(")){
 							
 						}else{
 							b = false;

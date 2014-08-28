@@ -95,7 +95,7 @@ public class TestQuery {
 					);
 			
 			SearchResponse response = client.prepareSearch("bank").addAggregation(aggregationBuilder)
-					.addFields(new String[]{"account_number","balance","age"})
+					.addFields(new String[]{"account_number","balance","age","tt"})
 					.setFrom(0).setSize(10)
 							.execute().actionGet();
 			
