@@ -74,14 +74,14 @@ ElasticSearch-SQL
 
 
 测试数据导入：
-路径：/com/es/api/test/accounts.json
+	路径：/com/es/api/test/accounts.json
 
 执行测试：
-1、/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
-2、/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
-3、其他测试类可自行修改之后测试
+	1、/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
+	2、/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
+	3、其他测试类可自行修改之后测试
 
 ElasticSearch - JAVA API 测试用例
-/com/es/sql/query/TestQuery.java
+	/com/es/sql/query/TestQuery.java
 
 
