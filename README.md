@@ -107,8 +107,12 @@ ElasticSearch-SQL
 	自定义查询结果维度 select a,b,c,d from ....
 	
 	多层group :实例 group by a,b,c,d
+	
 	多组group :实例 group by (a,b),(c,d),(e,f)
+	
 	range group:实例 group by age[*-20|20-25|25-30|30-35|35-40|40-*]
+	
 	histogram :实例 group by age[histogram-5]
+	
 	datehistogram ：实例 createtime[datehistogram-2day]
 
