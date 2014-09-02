@@ -71,7 +71,7 @@ public class QueryParserHandler {
 		
 		//String sql = "select account_number,age,balance from bank where age>25 order by balance desc";
 		
-		String sql = "";
+		String sql = "select stats(balance) from bank.account group by age[histogram-5],ds[datehistogram-m]";
 		
 		//指定输出段，
 		//对dateHistogram/Histogram直方图的支持,对query/filter分离查询

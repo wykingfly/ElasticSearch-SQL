@@ -46,9 +46,59 @@ public class TestQuery {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 
 	}
+	
+	
+	@Test
+	/**
+	 * 垂直直方图-时间
+	 */
+	public void testQuery16(){
+		try{
+			Client client = EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
+			
+			AggregationBuilder aggregationBuilder = AggregationBuilders.global("all").subAggregation(
+					AggregationBuilders.dateHistogram("date").field("ds").interval(Interval.HOUR)
+					);
+			
+			SearchResponse response = client.prepareSearch("bank").addAggregation(aggregationBuilder)
+					.setFrom(0).setSize(10)
+							.execute().actionGet();
+			
+			System.out.println(response);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	@Test
+	/**
+	 * 垂直直方图-普通
+	 */
+	public void testQuery15(){
+		try{
+			Client client = EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
+			
+			AggregationBuilder aggregationBuilder = AggregationBuilders.global("all").subAggregation(
+					AggregationBuilders.histogram("xx").field("age").interval(5)
+					);
+			
+			SearchResponse response = client.prepareSearch("bank").addAggregation(aggregationBuilder)
+					.setFrom(0).setSize(10)
+							.execute().actionGet();
+			
+			System.out.println(response);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	@Test
 	/**
