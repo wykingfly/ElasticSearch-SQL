@@ -6,11 +6,7 @@ ElasticSearch-SQL
 
 目前项目可以支持的查询如下：
 
-/*String sql = "query:select ds,serverid,count(distinct userid) as count from index.segment where (appid='10xxxx' and what='item' and (ds between '2014-08-12' and '2014-08-13') and tz='+8') or (axt in(1,2,3) and a='t') or is_admin=1 group by ds,serverid order by count desc limit 0,100";
-		
-		SearchResponse searchResponse = handler(sql.trim());
-		
-		System.out.println(searchResponse.toString());*/
+
 		//String sql = "filter:select state,city,count(distinct account_number) as count from bank where gender='M' and age>10 group by state,city";
 		
 		//String sql = "filter:select state,city,sum(balance) as total from bank where gender='M' and age>10 group by state,city";
