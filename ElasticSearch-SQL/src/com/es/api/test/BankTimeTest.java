@@ -17,6 +17,11 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import com.es.sql.util.EsUtil;
 import com.spatial4j.core.shape.impl.InfBufLine;
 
+/**
+ * 
+ * @author wangyong
+ *
+ */
 public class BankTimeTest {
 
 	public static void main(String[] args) {

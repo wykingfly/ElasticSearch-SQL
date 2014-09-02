@@ -88,6 +88,8 @@ public class QueryParserHandler {
 		
 		SearchResponse response = handler(sql.trim());
 		System.out.println(response.toString());
+		
+		
 	}
 	
 	
