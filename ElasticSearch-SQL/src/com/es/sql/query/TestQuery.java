@@ -57,7 +57,7 @@ public class TestQuery {
 	 */
 	public void testQuery16(){
 		try{
-			Client client = EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
+			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
 			
 			AggregationBuilder aggregationBuilder = AggregationBuilders.global("all").subAggregation(
 					AggregationBuilders.dateHistogram("date").field("ds").interval(Interval.HOUR)
