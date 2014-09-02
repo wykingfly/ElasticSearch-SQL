@@ -3,14 +3,9 @@ ElasticSearch-SQL
 
 该项目主要是为了熟悉sql的人员能够很方便的进行elasticsearch数据的查询，降低学习成本。
 
+#目前项目可以支持的查询如下：
 
-目前项目可以支持的查询如下：
 
-/*String sql = "query:select ds,serverid,count(distinct userid) as count from index.segment where (appid='10xxxx' and what='item' and (ds between '2014-08-12' and '2014-08-13') and tz='+8') or (axt in(1,2,3) and a='t') or is_admin=1 group by ds,serverid order by count desc limit 0,100";
-		
-		SearchResponse searchResponse = handler(sql.trim());
-		
-		System.out.println(searchResponse.toString());*/
 		//String sql = "filter:select state,city,count(distinct account_number) as count from bank where gender='M' and age>10 group by state,city";
 		
 		//String sql = "filter:select state,city,sum(balance) as total from bank where gender='M' and age>10 group by state,city";
@@ -73,20 +68,20 @@ ElasticSearch-SQL
 
 
 
-测试数据导入：
+#测试数据导入
 	路径：/com/es/api/test/accounts.json
 
-执行测试：
+#执行测试：
 	1、/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
 	2、/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
 	3、其他测试类可自行修改之后测试
 
-ElasticSearch - JAVA API 测试用例
+#ElasticSearch - JAVA API 测试用例
 	/com/es/sql/query/TestQuery.java
 
 
 
-已经支持功能如下：
+#已经支持功能如下：
 
 	count
 	count(distinct ..)
@@ -112,8 +107,12 @@ ElasticSearch - JAVA API 测试用例
 	自定义查询结果维度 select a,b,c,d from ....
 	
 	多层group :实例 group by a,b,c,d
+	
 	多组group :实例 group by (a,b),(c,d),(e,f)
+	
 	range group:实例 group by age[*-20|20-25|25-30|30-35|35-40|40-*]
+	
 	histogram :实例 group by age[histogram-5]
+	
 	datehistogram ：实例 createtime[datehistogram-2day]
 
