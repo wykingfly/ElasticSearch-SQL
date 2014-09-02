@@ -12,23 +12,41 @@ ElasticSearch-SQL
 		
 		System.out.println(searchResponse.toString());*/
 		//String sql = "filter:select state,city,count(distinct account_number) as count from bank where gender='M' and age>10 group by state,city";
+		
 		//String sql = "filter:select state,city,sum(balance) as total from bank where gender='M' and age>10 group by state,city";
+		
 		//String sql = "filter:select state,avg(balance) as total from bank where gender='M' and age>20 group by state";
+		
 		//String sql = "filter:select state,max(balance) as total from bank where gender='M' group by state";
+		
 		//String sql = "query:select * from bank where gender='M' and age>30";
+		
 		//String sql = "query:select * from bank where gender='M' and age in(30,31,32)";
+		
 		//String sql = "query:select * from bank where gender='M'";
+		
 		//String sql = "query:select * from bank where id=9BnH0MToTvWMHwikTb-uhA";
+		
 		//String sql = "query:select * from bank where (gender='M' and age>=40) or (balance>40000)";
+		
 		//String sql = "query:select * from bank where (gender='M' and age>=40) or (balance between 40000 and 44000)";
+		
 		//String sql = "query:select * from bank where (gender='M' and age>=40) or (balance>40000) limit 10";
+		
 		//String sql = "query:select * from bank where gender='M' and age>=30 and (balance between 40000 and 44000)";
+		
 		//String sql = "query:select * from bank where gender='M' and age>=30 and (balance between 40000 and 44000) and state in('id','wy')";
+		
 		//String sql = "query:select state,max(balance) from bank where gender='M' and age>=30 and state in('id','wy') group by state";
+		
 		//String sql = "query:select * from bank where firstname like '%beck%'";
+		
 		//String sql = "query:select * from bank where gender='M' and (age>=30 and age<35)";
+		
 		//String sql = "select sum(who.s) from events where context.channlid.s in(1,2,3,4) and context.serverid.s in('s1','s2') and what.s='item' group by context.serverid.s";
+		
 		//String sql = "select * from bank.account order by age desc,account_number asc";
+		
 		//------------------------------------------------------------------------------
 		//String sql = "select stats(balance) from bank.account group by age";
 		
@@ -42,3 +60,28 @@ ElasticSearch-SQL
 		
 		//String sql = "select account_number,age,balance from bank where age>25 order by balance desc";
 		
+		//----------------------------------------------------------------------------------------
+		
+		//String sql = "select stats(balance) from bank2.account2 group by age[histogram-5]";
+		
+		//String sql = "select stats(balance) from bank2.account2 group by state,age[histogram-5]";
+		
+		//String sql = "select stats(balance) from bank2.account2 group by createtime[datehistogram-2day]";
+		
+		//String sql = "select stats(balance) from bank2.account2 group by state,createtime[datehistogram-2day]";
+		
+
+
+
+测试数据导入：
+路径：/com/es/api/test/accounts.json
+
+执行测试：
+1、/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
+2、/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
+3、其他测试类可自行修改之后测试
+
+ElasticSearch - JAVA API 测试用例
+/com/es/sql/query/TestQuery.java
+
+
