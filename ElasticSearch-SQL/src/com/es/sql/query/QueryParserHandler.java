@@ -71,12 +71,20 @@ public class QueryParserHandler {
 		
 		//String sql = "select account_number,age,balance from bank where age>25 order by balance desc";
 		
-		String sql = "select stats(balance) from bank.account group by age[histogram-5],ds[datehistogram-m]";
+		//String sql = "select stats(balance) from bank2.account2 group by age[histogram-5]";
 		
-		//指定输出段，
-		//对dateHistogram/Histogram直方图的支持,对query/filter分离查询
+		//String sql = "select stats(balance) from bank2.account2 group by state,age[histogram-5]";
+		
+		//String sql = "select stats(balance) from bank2.account2 group by createtime[datehistogram-2day]";
+		
+		//String sql = "select stats(balance) from bank2.account2 group by state,createtime[datehistogram-2day]";
+		
+		String sql = "";
+		
+		//对query/filter分离查询
 		
 		
+		EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
 		
 		SearchResponse response = handler(sql.trim());
 		System.out.println(response.toString());

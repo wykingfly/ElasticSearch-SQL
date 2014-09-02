@@ -11,6 +11,7 @@ import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogram.Interval;
 import org.elasticsearch.search.aggregations.bucket.range.RangeBuilder;
 
 import com.es.sql.parse.QuerySqlParser;
@@ -137,7 +138,73 @@ public class QueryAggregationHandler {
 						System.out.println("---------arr[0]"+arr[0]);
 						String[] tmp = arr[0].split("-");
 						if(tmp.length==2){
-							if("*".equals(tmp[0].trim())){
+							//先处理垂直直方图或者时间垂直直方图
+							if("datehistogram".equals(tmp[0].trim().toLowerCase())){//时间垂直直方图
+								String x = tmp[1].trim().toLowerCase();
+								Interval interval = null;
+								int i = 0;
+								if(x.endsWith("second")){
+									interval = Interval.SECOND;
+									if(!"second".equals(x)){
+										String t = x.substring(0,x.indexOf("second"));
+										if(isIntegerOrDouble(t)){
+											i = Integer.parseInt(t);
+										}
+										interval = Interval.seconds(i);
+									}
+								}else if(x.endsWith("minute")){
+									interval = Interval.MINUTE;
+									if(!"minute".equals(x)){
+										String t = x.substring(0,x.indexOf("minute"));
+										if(isIntegerOrDouble(t)){
+											i = Integer.parseInt(t);
+										}
+										interval = Interval.minutes(i);
+									}
+								}else if(x.endsWith("hour")){
+									interval = Interval.HOUR;
+									if(!"hour".equals(x)){
+										String t = x.substring(0,x.indexOf("hour"));
+										if(isIntegerOrDouble(t)){
+											i = Integer.parseInt(t);
+										}
+										interval = Interval.hours(i);
+									}
+								}else if(x.endsWith("day")){
+									interval = Interval.DAY;
+									if(!"day".equals(x)){
+										String t = x.substring(0,x.indexOf("day"));
+										if(isIntegerOrDouble(t)){
+											i = Integer.parseInt(t);
+										}
+										interval = Interval.days(i);
+									}
+									
+								}else if(x.endsWith("week")){
+									interval = Interval.WEEK;
+									if(!"week".equals(x)){
+										String t = x.substring(0,x.indexOf("week"));
+										if(isIntegerOrDouble(t)){
+											i = Integer.parseInt(t);
+										}
+										interval = Interval.weeks(i);
+									}
+								}else if(x.endsWith("month")){
+									interval = Interval.MONTH;
+								}else if(x.endsWith("quarter")){
+									interval = Interval.QUARTER;
+								}else if(x.endsWith("year")){
+									interval = Interval.YEAR;
+								}
+								list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval));
+							}else if("histogram".equals(tmp[0].trim().toLowerCase())){//垂直直方图
+								String x = tmp[1].trim().toLowerCase();
+								if(isIntegerOrDouble(x)){
+									long interval = Long.parseLong(x);
+									list.add(AggregationBuilders.histogram("histogram").field(field).interval(interval));
+								}
+							
+							}else if("*".equals(tmp[0].trim())){
 								
 								if(isIntegerOrDouble(tmp[1])){//必须是数字或者小数
 									

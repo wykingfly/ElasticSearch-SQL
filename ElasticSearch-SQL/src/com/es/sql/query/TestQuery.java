@@ -60,10 +60,23 @@ public class TestQuery {
 			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
 			
 			AggregationBuilder aggregationBuilder = AggregationBuilders.global("all").subAggregation(
-					AggregationBuilders.dateHistogram("date").field("ds").interval(Interval.HOUR)
+					AggregationBuilders.dateHistogram("datehistogram").field("createtime").interval(Interval.hours(3))
 					);
 			
-			SearchResponse response = client.prepareSearch("bank").addAggregation(aggregationBuilder)
+			//Interval.HOUR  hours()
+			//Interval.DAY   days()
+			//Interval.MINUTE minutes()
+			//Interval.MONTH
+			//Interval.SECOND  seconds()
+			//Interval.YEAR
+			//Interval.WEEK   weeks()
+			//Interval.QUARTER
+			
+			AggregationBuilder aggregationBuilder2 = AggregationBuilders.global("all").subAggregation(
+					AggregationBuilders.dateHistogram("datehistogram").field("createtime").interval(Interval.HOUR)
+					);
+			
+			SearchResponse response = client.prepareSearch("bank2").addAggregation(aggregationBuilder2)
 					.setFrom(0).setSize(10)
 							.execute().actionGet();
 			
