@@ -3,8 +3,7 @@ ElasticSearch-SQL
 
 该项目主要是为了熟悉sql的人员能够很方便的进行elasticsearch数据的查询，降低学习成本。
 
-
-目前项目可以支持的查询如下：
+#目前项目可以支持的查询如下：
 
 
 		//String sql = "filter:select state,city,count(distinct account_number) as count from bank where gender='M' and age>10 group by state,city";
@@ -69,20 +68,20 @@ ElasticSearch-SQL
 
 
 
-测试数据导入：
+#测试数据导入
 	路径：/com/es/api/test/accounts.json
 
-执行测试：
+#执行测试：
 	1、/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
 	2、/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
 	3、其他测试类可自行修改之后测试
 
-ElasticSearch - JAVA API 测试用例
+#ElasticSearch - JAVA API 测试用例
 	/com/es/sql/query/TestQuery.java
 
 
 
-已经支持功能如下：
+#已经支持功能如下：
 
 	count
 	count(distinct ..)
