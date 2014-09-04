@@ -79,7 +79,9 @@ public class QueryParserHandler {
 		
 		//String sql = "select stats(balance) from bank2.account2 group by state,createtime[datehistogram-2day]";
 		
-		String sql = "";
+		//String sql = "select appid.s,what.s from [segments.20140902].segments group by appid.s,what.s";
+		
+		String sql = "select * from [segments.20140902].segments where appid.s ='982da2ae92188e5f73fbf7f82e41ed65' and what.s='item' limit 1";
 		//对query/filter分离查询
 		
 		
@@ -331,7 +333,7 @@ public class QueryParserHandler {
 			String select = qsp.getSelectCol().trim();
 			String[] fields = null;
 			if(StringUtils.isNotEmpty(select)){
-				if(select.length()==1 && select.indexOf("*")>0){//select * from 。。。
+				if(select.length()==1 && select.indexOf("*")>=0){//select * from 。。。
 					
 				}else{
 					fields = select.split(",");

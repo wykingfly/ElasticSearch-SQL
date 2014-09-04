@@ -27,8 +27,13 @@ public class QuerySqlParser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String sql = "select ds,serverid,count(distinct userid) as count from index.segment where (appid='10xxxx' and what='item' and (ds between '2014-08-12' and '2014-08-13') and tz='+8') or (axt in(1,2,3)) group by ds,serverid order by count desc limit 0,100";
-		new QuerySqlParser(sql);
+		//String sql = "select ds,serverid,count(distinct userid) as count from index.segment where (appid='10xxxx' and what='item' and (ds between '2014-08-12' and '2014-08-13') and tz='+8') or (axt in(1,2,3)) group by ds,serverid order by count desc limit 0,100";
+		//new QuerySqlParser(sql);
+		
+		String sql = "select * from [segments.20140902].segments where appid.s ='982da2ae92188e5f73fbf7f82e41ed65' and what.s='item' limit 1";
+		QuerySqlParser x = new QuerySqlParser(sql);
+		System.out.println(x.whereCondition);
+		System.out.println(x.limitCondition);
 	}
 
 	private void parserSql(String sql) {
@@ -55,7 +60,10 @@ public class QuerySqlParser {
 		} else if (isContains(sql, "order\\s+by")) {
 			// 条件在where和order by之间
 			regex = "(where)(.+)(order\\s+by)";
-		} else {
+		} else if(isContains(sql, "limit")){
+			// 条件在where到字符串末尾
+			regex = "(where)(.+)(limit)";
+		}else{
 			// 条件在where到字符串末尾
 			regex = "(where)(.+)($)";
 		}
