@@ -23,9 +23,25 @@ public class Test {
 		for(String str:list){
 			System.out.println(str);
 		}*/
-		rangeGroupBySplit("age[*-20|20-25|25-30|30-35|35-40|40-*]");
+		//rangeGroupBySplit("age[*-20|20-25|25-30|30-35|35-40|40-*]");
+		splitIndex("[index.2014]");
 	}
 
+	private static void splitIndex(String index){
+		if(index.startsWith("[") && index.indexOf("]")>0){
+			String x = index.substring(1,index.indexOf("]"));
+			System.out.println(x);
+			if(x.length()+2==index.length()){
+				
+			}else{
+				String y = index.substring(index.lastIndexOf(".")+1);
+				System.out.println(y);
+			}
+			
+			
+		}
+	}
+	
 	private static void rangeGroupBySplit(String g){
 		String field = g.substring(0,g.indexOf("[")).trim();
 		String value = g.substring(g.indexOf("[")+1,g.indexOf("]"));

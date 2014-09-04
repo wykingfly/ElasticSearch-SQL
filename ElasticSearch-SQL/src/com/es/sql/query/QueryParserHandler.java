@@ -80,7 +80,6 @@ public class QueryParserHandler {
 		//String sql = "select stats(balance) from bank2.account2 group by state,createtime[datehistogram-2day]";
 		
 		String sql = "";
-		
 		//对query/filter分离查询
 		
 		
@@ -197,12 +196,24 @@ public class QueryParserHandler {
 			StringBuffer indexBuffer = new StringBuffer();
 			StringBuffer typeBuffer = new StringBuffer();
 			for(String str:indexArr){
-				String[] x = str.split("\\.");
-				if(x.length==1){
-					indexBuffer.append(x[0]).append("\001");
+				str = str.trim();
+				if(str.startsWith("[") && str.indexOf("]")>0){
+					String x = str.substring(1,str.indexOf("]"));
+					if(x.length()+2==str.length()){
+						indexBuffer.append(x).append("\001");
+					}else{
+						String y = str.substring(str.lastIndexOf(".")+1);
+						indexBuffer.append(x).append("\001");
+						typeBuffer.append(y).append("\001");
+					}
 				}else{
-					indexBuffer.append(x[0]).append("\001");
-					typeBuffer.append(x[1]).append("\001");
+					String[] x = str.split("\\.");
+					if(x.length==1){
+						indexBuffer.append(x[0]).append("\001");
+					}else{
+						indexBuffer.append(x[0]).append("\001");
+						typeBuffer.append(x[1]).append("\001");
+					}
 				}
 			}
 			String[] index = indexBuffer.toString().substring(0,(indexBuffer.toString().length()-"\001".length())).split("\001");
@@ -278,12 +289,24 @@ public class QueryParserHandler {
 			StringBuffer indexBuffer = new StringBuffer();
 			StringBuffer typeBuffer = new StringBuffer();
 			for(String str:indexArr){
-				String[] x = str.split("\\.");
-				if(x.length==1){
-					indexBuffer.append(x[0]).append("\001");
+				str = str.trim();
+				if(str.startsWith("[") && str.indexOf("]")>0){
+					String x = str.substring(1,str.indexOf("]"));
+					if(x.length()+2==str.length()){
+						indexBuffer.append(x).append("\001");
+					}else{
+						String y = str.substring(str.lastIndexOf(".")+1);
+						indexBuffer.append(x).append("\001");
+						typeBuffer.append(y).append("\001");
+					}
 				}else{
-					indexBuffer.append(x[0]).append("\001");
-					typeBuffer.append(x[1]).append("\001");
+					String[] x = str.split("\\.");
+					if(x.length==1){
+						indexBuffer.append(x[0]).append("\001");
+					}else{
+						indexBuffer.append(x[0]).append("\001");
+						typeBuffer.append(x[1]).append("\001");
+					}
 				}
 			}
 			String[] index = indexBuffer.toString().substring(0,(indexBuffer.toString().length()-"\001".length())).split("\001");
@@ -378,12 +401,24 @@ public class QueryParserHandler {
 			StringBuffer indexBuffer = new StringBuffer();
 			StringBuffer typeBuffer = new StringBuffer();
 			for(String str:indexArr){
-				String[] x = str.split("\\.");
-				if(x.length==1){
-					indexBuffer.append(x[0]).append("\001");
+				str = str.trim();
+				if(str.startsWith("[") && str.indexOf("]")>0){
+					String x = str.substring(1,str.indexOf("]"));
+					if(x.length()+2==str.length()){
+						indexBuffer.append(x).append("\001");
+					}else{
+						String y = str.substring(str.lastIndexOf(".")+1);
+						indexBuffer.append(x).append("\001");
+						typeBuffer.append(y).append("\001");
+					}
 				}else{
-					indexBuffer.append(x[0]).append("\001");
-					typeBuffer.append(x[1]).append("\001");
+					String[] x = str.split("\\.");
+					if(x.length==1){
+						indexBuffer.append(x[0]).append("\001");
+					}else{
+						indexBuffer.append(x[0]).append("\001");
+						typeBuffer.append(x[1]).append("\001");
+					}
 				}
 			}
 			String[] index = indexBuffer.toString().substring(0,(indexBuffer.toString().length()-"\001".length())).split("\001");

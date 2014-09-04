@@ -15,19 +15,13 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
 import com.es.sql.util.EsUtil;
-import com.spatial4j.core.shape.impl.InfBufLine;
 
-/**
- * 
- * @author wangyong
- *
- */
-public class BankTimeTest {
+public class RoutingBankTest {
 
 	public static void main(String[] args) {
-		/*PutMappingRequest mRequest = Requests.putMappingRequest("bank2").type("account2").source(getMapping());
+		/*PutMappingRequest mRequest = Requests.putMappingRequest("bank3").type("account3").source(getMapping());
 		Client client = EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
-		client.admin().indices().prepareCreate("bank2").execute().actionGet(); 
+		client.admin().indices().prepareCreate("bank3").execute().actionGet(); 
 		client.admin().indices().putMapping(mRequest).actionGet();
 		
 		client.close();*/
@@ -92,9 +86,10 @@ public class BankTimeTest {
 	
 	private static void indexContent(XContentBuilder content){
 		try{
-			
+			Random random = new Random();
+			int routing = random.nextInt(3);
 			IndexResponse response = EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"})
-					.prepareIndex("bank2", "account2").setSource(content).execute().actionGet();
+					.prepareIndex("bank3", "account3").setRouting(String.valueOf(routing)).setSource(content).execute().actionGet();
 			System.out.println(response.getId() + "====" + response.getIndex() + "====" + response.getType());
 			
 		}catch (Exception e) {
@@ -105,7 +100,7 @@ public class BankTimeTest {
 	private static XContentBuilder getMapping(){
 		XContentBuilder mapping = null;
 		try{
-			mapping = XContentFactory.jsonBuilder().startObject().startObject("account2").startObject("properties");
+			mapping = XContentFactory.jsonBuilder().startObject().startObject("account3").startObject("properties");
 			mapping.startObject("account_number").field("type", "integer").field("store","yes").endObject()
 				.startObject("balance").field("type","integer").field("store","yes").endObject()
 				.startObject("firstname").field("type","string").field("store","yes").endObject()
@@ -126,4 +121,5 @@ public class BankTimeTest {
 		}
 		return mapping;
 	}
+
 }
