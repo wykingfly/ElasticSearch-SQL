@@ -137,7 +137,7 @@ public class QueryAggregationHandler {
 					if(arr.length==1){
 						System.out.println("---------arr[0]"+arr[0]);
 						String[] tmp = arr[0].split("-");
-						if(tmp.length==2){
+						if(tmp.length>=2){
 							//先处理垂直直方图或者时间垂直直方图
 							if("datehistogram".equals(tmp[0].trim().toLowerCase())){//时间垂直直方图
 								String x = tmp[1].trim().toLowerCase();
@@ -196,7 +196,13 @@ public class QueryAggregationHandler {
 								}else if(x.endsWith("year")){
 									interval = Interval.YEAR;
 								}
-								list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval));
+								if(tmp.length==3){//tmp[2]表示格式
+									String formate = tmp[2].trim();
+									formate = formate.substring(1,formate.length()-1).trim();
+									list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval).format(formate));
+								}else{
+									list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval));
+								}
 							}else if("histogram".equals(tmp[0].trim().toLowerCase())){//垂直直方图
 								String x = tmp[1].trim().toLowerCase();
 								if(isIntegerOrDouble(x)){
