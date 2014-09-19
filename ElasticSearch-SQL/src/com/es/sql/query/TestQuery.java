@@ -1,12 +1,20 @@
 package com.es.sql.query;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.concurrent.TimeUnit;
 
+import net.sf.json.JSONObject;
+
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
+import org.elasticsearch.common.collect.ImmutableOpenMap;
+import org.elasticsearch.common.hppc.cursors.ObjectCursor;
 import org.elasticsearch.common.lucene.search.OrFilter;
 import org.elasticsearch.index.fielddata.AtomicFieldData.Order;
 import org.elasticsearch.index.query.FilterBuilder;
@@ -50,6 +58,155 @@ public class TestQuery {
 
 	}
 	
+	@Test
+	/**
+	 * 获取index.type下面的mapping信息
+	 */
+	public void testQuery19(){
+		try{
+			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
+			
+			GetMappingsRequest request = new GetMappingsRequest();
+			request.indices("segments.20140902-new","segments.20140903-new").types("982da2ae92188e5f73fbf7f82e41ed65-item");
+			
+			GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
+			
+			ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>> tmp = response.getMappings();
+			
+			for(ObjectCursor<String> key :tmp.keys()){
+				ImmutableOpenMap<String, MappingMetaData> map= tmp.get(key.value);
+				System.out.println(key.value);
+				
+				for(ObjectCursor<String> ck:map.keys()){
+					System.out.println(ck.value);
+					MappingMetaData mmData = map.get(ck.value);
+					Map<String, Object> cMap = mmData.sourceAsMap();
+					for(Map.Entry<String, Object> entry:cMap.entrySet()){
+						System.out.println(entry.getKey());
+						//System.out.println(entry.getValue().toString());
+						
+						JSONObject bean = JSONObject.fromString(entry.getValue().toString());
+						
+						//System.out.println(bean.get("context").toString());
+						
+						JSONObject context = JSONObject.fromString(bean.get("context").toString());
+						JSONObject context_c = JSONObject.fromString(context.get("properties").toString());
+						
+						Iterator iterator = context_c.keys();
+						
+						while(iterator.hasNext()){
+							String ckey = (String) iterator.next();
+							System.out.println(ckey);
+						}
+					}
+				}
+			}
+			
+			//System.out.println(response.toString());
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Test
+	/**
+	 * 获取index下面的mapping信息
+	 */
+	public void testQuery18(){
+		try{
+			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
+			
+			GetMappingsRequest request = new GetMappingsRequest();
+			request.indices("segments.20140902-new");
+			
+			GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
+			
+			ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>> tmp = response.getMappings();
+			
+			for(ObjectCursor<String> key :tmp.keys()){
+				ImmutableOpenMap<String, MappingMetaData> map= tmp.get(key.value);
+				System.out.println(key.value);
+				
+				for(ObjectCursor<String> ck:map.keys()){
+					System.out.println(ck.value);
+					MappingMetaData mmData = map.get(ck.value);
+					Map<String, Object> cMap = mmData.sourceAsMap();
+					for(Map.Entry<String, Object> entry:cMap.entrySet()){
+						System.out.println(entry.getKey());
+						//System.out.println(entry.getValue().toString());
+						
+						JSONObject bean = JSONObject.fromString(entry.getValue().toString());
+						
+						//System.out.println(bean.get("context").toString());
+						
+						JSONObject context = JSONObject.fromString(bean.get("context").toString());
+						JSONObject context_c = JSONObject.fromString(context.get("properties").toString());
+						
+						Iterator iterator = context_c.keys();
+						while(iterator.hasNext()){
+							String ckey = (String) iterator.next();
+							System.out.println(ckey);
+						}
+					}
+				}
+			}
+			
+			//System.out.println(response.toString());
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	/**
+	 * 垂直直方图-时间
+	 */
+	public void testQuery17_1(){
+		try{
+			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
+			
+			AggregationBuilder aggregationBuilder2 = AggregationBuilders.global("all").subAggregation(
+					AggregationBuilders.dateHistogram("datehistogram").field("when.d").interval(Interval.minutes(5)).format("HH:mm")
+					);
+			FilterBuilder filterBuilder = FilterBuilders.termFilter("appid.s", "982da2ae92188e5f73fbf7f82e41ed65");
+			
+			SearchResponse response = client.prepareSearch("events.20140909").setTypes("events")
+					.setPostFilter(filterBuilder)
+					.addAggregation(aggregationBuilder2)
+					.setFrom(0).setSize(1)
+							.execute().actionGet();
+			
+			System.out.println(response);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	/**
+	 * 垂直直方图-时间
+	 */
+	public void testQuery17(){
+		try{
+			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
+			
+			QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(QueryBuilders.queryString("982da2ae92188e5f73fbf7f82e41ed65").field("appid.s"))
+					.must(QueryBuilders.queryString("item").field("what.s"));
+			
+			SearchResponse response = client.prepareSearch("segments.20140902").setTypes("segments").setQuery(queryBuilder)
+					.setFrom(0).setSize(1)
+							.execute().actionGet();
+			
+			System.out.println(response);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Test
 	/**

@@ -225,6 +225,7 @@ public class QueryAggregationHandler {
 							}
 						}else{
 							//格式错误
+							
 						}
 					}else if(arr.length>1){
 						RangeBuilder rg = AggregationBuilders.range(field).field(field);

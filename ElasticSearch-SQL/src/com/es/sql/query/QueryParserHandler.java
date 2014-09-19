@@ -2,6 +2,7 @@ package com.es.sql.query;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -60,10 +61,10 @@ public class QueryParserHandler {
 		
 		//------------------------------------------------------------------------------
 		//String sql = "select stats(balance) from bank.account group by age";
-		
+		//String sql = "select count(distinct account_number) from bank.account group by age";
 		//String sql = "select stats(balance) from bank.account group by state,age[*-20|20-25|25-30|30-35|35-40|40-*]";
 		
-		//String sql = "select stats(balance) from bank.account group by (age[*-20|20-25|25-30|30-35|35-40|40-*]),(state)";
+		String sql = "select stats(balance) from bank.account group by (age[*-20|20-25|25-30|30-35|35-40|40-*]),(state)";
 		
 		//String sql = "select stats(balance) from bank.account group by (state,age[*-20|20-25|25-30|30-35|35-40|40-*]),(city)";
 		
@@ -81,21 +82,46 @@ public class QueryParserHandler {
 		
 		//String sql = "select appid.s,what.s from [segments.20140902].segments group by appid.s,what.s";
 		
-		String sql = "select * from [segments.20140902].segments where appid.s ='982da2ae92188e5f73fbf7f82e41ed65' and what.s='item' limit 1";
 		//对query/filter分离查询
 		
+		//String sql = "select appid.s,what.s from [segments.20140909-new] group by appid.s,what.s";
+		
+		//String sql = "select * from [segments.20140902].segments where appid.s ='982da2ae92188e5f73fbf7f82e41ed65' and what.s='item' limit 1";
+		
+		//String sql = "select appid.s, count(who.s) from [events.20140909].events group by appid.s,when.d[datehistogram-5minute-(HH:mm)]";
+		
+		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram-5minute-(HH:mm)]";
+		
+		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' and (when.d between '2014-09-09' and '2014-09-09') group by when.d[datehistogram-5minute-(HH:mm)]";
 		
 		EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
 		
-		SearchResponse response = handler(sql.trim());
+		QuerySqlParser qsp = new QuerySqlParser(sql.trim());
+		
+		SearchResponse response = handler(qsp,sql.trim());
+		
+		
 		System.out.println(response.toString());
 		
+		//聚合结果集解析。。。。。。。。。。。。。。。。。。。。只针对聚合函数，普通查询可以API接口直接查询
+		
+		Map<Integer, Map<String, String>> map = AggregationResultParser.resultParser3(response,qsp);
+		
+		for(Map.Entry<Integer, Map<String, String>> entry : map.entrySet()){
+			Integer key = entry.getKey();
+			Map<String, String> rmap = entry.getValue();
+			System.out.println(key+"---------------------------------------------------");
+			for(Map.Entry<String, String> entry2:rmap.entrySet()){
+				System.out.println(entry2.getKey()+"            "+entry2.getValue());
+			}
+			
+		}
 		
 	}
 	
 	
 	
-	public static SearchResponse handler(String sql){
+	public static SearchResponse handler(QuerySqlParser qsp,String sql){
 		sql = sql.trim();
 		int handler_type = 1;//1:filter 2:query
 		if(sql.startsWith("filter:")){
@@ -109,7 +135,7 @@ public class QueryParserHandler {
 		}
 		System.out.println(sql.toString());
 		
-		QuerySqlParser qsp = new QuerySqlParser(sql);
+		
 		SearchResponse searchResponse = null;
 		if(SyntaxCheck.checkSyntax(qsp)){
 			
@@ -446,7 +472,8 @@ public class QueryParserHandler {
 				}
 			}
 			
-			sqb.setFrom(start).setSize(size);
+			//sqb.setFrom(start).setSize(size);
+			sqb.setSize(0);//聚合函数，不需要设置size，size针对普通query sql
 			
 			searchResponse = sqb.execute().actionGet();
 		}catch (Exception e) {
