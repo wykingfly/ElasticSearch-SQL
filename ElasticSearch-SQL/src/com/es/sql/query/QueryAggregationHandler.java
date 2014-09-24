@@ -322,7 +322,7 @@ public class QueryAggregationHandler {
 			if (optr == Operation.COUNT) {
 				if (isDestinct) {
 					aggregationBuilder2.subAggregation(AggregationBuilders
-							.cardinality("distinct").field(field));// distinct
+							.cardinality("distinct").field(field).precisionThreshold(1000));// distinct
 				}
 			} else if (optr == Operation.AVG) {
 				aggregationBuilder2.subAggregation(AggregationBuilders.avg(
