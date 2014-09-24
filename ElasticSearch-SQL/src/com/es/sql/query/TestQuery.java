@@ -67,7 +67,7 @@ public class TestQuery {
 			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
 			
 			GetMappingsRequest request = new GetMappingsRequest();
-			request.indices("segments.20140902-new","segments.20140903-new").types("982da2ae92188e5f73fbf7f82e41ed65-item");
+			request.indices("segments.20140909-new","segments.20140910-new").types("982da2ae92188e5f73fbf7f82e41ed65-item");
 			
 			GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
 			
@@ -119,7 +119,7 @@ public class TestQuery {
 			Client client =  EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
 			
 			GetMappingsRequest request = new GetMappingsRequest();
-			request.indices("segments.20140902-new");
+			request.indices("segments.20140909-new");
 			
 			GetMappingsResponse response = client.admin().indices().getMappings(request).actionGet();
 			

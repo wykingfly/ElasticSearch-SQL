@@ -1,13 +1,12 @@
 package com.es.sql.query;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.InternalSingleBucketAggregation;
 import org.elasticsearch.search.aggregations.bucket.filter.InternalFilter;
@@ -43,7 +42,7 @@ public class AggregationResultParser {
 	}
 
 	public static Map<Integer, Map<String, String>> resultParser3(SearchResponse response,QuerySqlParser qsp){
-		Map<Integer,Map<String, String>> resultMap = new HashMap<Integer,Map<String,String>>();
+		Map<Integer,Map<String, String>> resultMap = new TreeMap<Integer,Map<String,String>>();
 		
 		try{
 			
@@ -57,7 +56,7 @@ public class AggregationResultParser {
 			
 			String group = qsp.getGroupCondition().trim();//获取group 条件
 			
-			Map<Integer,Map<Integer, String>> map = new HashMap<Integer,Map<Integer, String>>();
+			Map<Integer,Map<Integer, String>> map = new TreeMap<Integer,Map<Integer, String>>();
 			if (group.startsWith("(")) {// 可能多层嵌套group存在
 				//(city,age[*-20|20-25|25-30|30-35|35-40|40-*],state),(city,state),(age,account_number)
 				
@@ -94,7 +93,7 @@ public class AggregationResultParser {
 	}
 	
 	private static Map<String, String> getResult(Map<Integer, String> map,String functionName,InternalGlobal global,InternalFilter filter){
-		Map<String, String> result = new HashMap<String,String>();
+		Map<String, String> result = new TreeMap<String,String>();
 		try{
 			InternalSingleBucketAggregation tmp = global;
 			if(filter != null){
@@ -353,7 +352,7 @@ public class AggregationResultParser {
 	 * @return
 	 */
 	private static Map<Integer, String> getNameMap(String group){
-		Map<Integer,String> tmpMap = new HashMap<Integer,String>();
+		Map<Integer,String> tmpMap = new TreeMap<Integer,String>();
 		try{
 			String[] arrGroup = group.split(",");
 			int num = 0;

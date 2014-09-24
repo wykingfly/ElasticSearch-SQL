@@ -64,7 +64,7 @@ public class QueryParserHandler {
 		//String sql = "select count(distinct account_number) from bank.account group by age";
 		//String sql = "select stats(balance) from bank.account group by state,age[*-20|20-25|25-30|30-35|35-40|40-*]";
 		
-		String sql = "select stats(balance) from bank.account group by (age[*-20|20-25|25-30|30-35|35-40|40-*]),(state)";
+		//String sql = "select stats(balance) from bank.account group by (age[*-20|20-25|25-30|30-35|35-40|40-*]),(state)";
 		
 		//String sql = "select stats(balance) from bank.account group by (state,age[*-20|20-25|25-30|30-35|35-40|40-*]),(city)";
 		
@@ -90,7 +90,7 @@ public class QueryParserHandler {
 		
 		//String sql = "select appid.s, count(who.s) from [events.20140909].events group by appid.s,when.d[datehistogram-5minute-(HH:mm)]";
 		
-		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram-5minute-(HH:mm)]";
+		String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram-5minute-(HH:mm)]";
 		
 		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' and (when.d between '2014-09-09' and '2014-09-09') group by when.d[datehistogram-5minute-(HH:mm)]";
 		
