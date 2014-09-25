@@ -23,6 +23,8 @@ public class EsUtil {
 	private static String clusterName;
 	private static String[] hosts;
 	
+	public static long precisionThreshold = 1000;
+	
 	/**
 	 * 获取客户端
 	 * @return
@@ -115,6 +117,14 @@ public class EsUtil {
 
 	public static void setHosts(String[] hosts) {
 		EsUtil.hosts = hosts;
+	}
+
+	public static long getPrecisionThreshold() {
+		return precisionThreshold;
+	}
+
+	public static void setPrecisionThreshold(long precisionThreshold) {
+		EsUtil.precisionThreshold = precisionThreshold;
 	} 
 	
 	

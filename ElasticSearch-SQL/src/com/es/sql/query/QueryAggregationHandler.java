@@ -15,6 +15,7 @@ import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogram.Inte
 import org.elasticsearch.search.aggregations.bucket.range.RangeBuilder;
 
 import com.es.sql.parse.QuerySqlParser;
+import com.es.sql.util.EsUtil;
 
 /**
  * 聚合处理
@@ -322,7 +323,7 @@ public class QueryAggregationHandler {
 			if (optr == Operation.COUNT) {
 				if (isDestinct) {
 					aggregationBuilder2.subAggregation(AggregationBuilders
-							.cardinality("distinct").field(field).precisionThreshold(1000));// distinct
+							.cardinality("distinct").field(field).precisionThreshold(EsUtil.getPrecisionThreshold()));// distinct
 				}
 			} else if (optr == Operation.AVG) {
 				aggregationBuilder2.subAggregation(AggregationBuilders.avg(
