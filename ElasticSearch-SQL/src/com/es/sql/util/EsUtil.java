@@ -24,7 +24,8 @@ public class EsUtil {
 	private static String[] hosts;
 	
 	public static long precisionThreshold = 1000;
-	
+	public static boolean ignore_unavailable = true;
+	public static boolean allow_no_indices = true;
 	/**
 	 * 获取客户端
 	 * @return
@@ -125,6 +126,22 @@ public class EsUtil {
 
 	public static void setPrecisionThreshold(long precisionThreshold) {
 		EsUtil.precisionThreshold = precisionThreshold;
+	}
+
+	public static boolean isIgnore_unavailable() {
+		return ignore_unavailable;
+	}
+
+	public static void setIgnore_unavailable(boolean ignore_unavailable) {
+		EsUtil.ignore_unavailable = ignore_unavailable;
+	}
+
+	public static boolean isAllow_no_indices() {
+		return allow_no_indices;
+	}
+
+	public static void setAllow_no_indices(boolean allow_no_indices) {
+		EsUtil.allow_no_indices = allow_no_indices;
 	} 
 	
 	

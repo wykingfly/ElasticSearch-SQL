@@ -7,7 +7,9 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.support.IndicesOptions;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -90,7 +92,7 @@ public class QueryParserHandler {
 		
 		//String sql = "select appid.s, count(who.s) from [events.20140909].events group by appid.s,when.d[datehistogram-5minute-(HH:mm)]";
 		
-		String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram-5minute-(HH:mm)]";
+		String sql = "select count(who.s) from [events.20140909].events,[events.2014] where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram-5minute-(HH:mm)]";
 		
 		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' and (when.d between '2014-09-09' and '2014-09-09') group by when.d[datehistogram-5minute-(HH:mm)]";
 		
@@ -250,8 +252,11 @@ public class QueryParserHandler {
 			if(typeBuffer.toString().length()>0){
 				type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
 			}
+			IndicesOptions options = IndicesOptions.fromOptions(EsUtil.isIgnore_unavailable(), EsUtil.isAllow_no_indices(), true, true);
 			
-			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index));
+			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index)).setIndicesOptions(options);
+			
+			
 			if(type!=null && type.length>0){
 				sqb.setTypes(CommonUtils.trimStrings(type));
 			}
@@ -342,8 +347,11 @@ public class QueryParserHandler {
 			if(typeBuffer.toString().length()>0){
 				type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
 			}
+			IndicesOptions options = IndicesOptions.fromOptions(EsUtil.isIgnore_unavailable(), EsUtil.isAllow_no_indices(), true, true);
 			
-			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index));
+			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index)).setIndicesOptions(options);
+			
+			
 			if(type!=null && type.length>0){
 				sqb.setTypes(CommonUtils.trimStrings(type));
 			}
@@ -454,8 +462,11 @@ public class QueryParserHandler {
 			if(typeBuffer.toString().length()>0){
 				type = typeBuffer.toString().substring(0,(typeBuffer.toString().length()-"\001".length())).split("\001");
 			}
+			IndicesOptions options = IndicesOptions.fromOptions(EsUtil.isIgnore_unavailable(), EsUtil.isAllow_no_indices(), true, true);
 			
-			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index));
+			SearchRequestBuilder sqb = client.prepareSearch(CommonUtils.trimStrings(index)).setIndicesOptions(options);
+			
+			
 			if(type!=null && type.length>0){
 				sqb.setTypes(CommonUtils.trimStrings(type));
 			}
