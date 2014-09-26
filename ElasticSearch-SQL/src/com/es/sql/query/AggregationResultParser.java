@@ -366,7 +366,7 @@ public class AggregationResultParser {
 					String[] arr = value.split("\\|");
 					if(arr.length==1){
 						System.out.println("---------arr[0]"+arr[0]);
-						String[] tmp = arr[0].split("-");
+						String[] tmp = arr[0].split("_");
 						if(tmp.length>=2){
 							//先处理垂直直方图或者时间垂直直方图
 							if("datehistogram".equals(tmp[0].trim().toLowerCase())){//时间垂直直方图

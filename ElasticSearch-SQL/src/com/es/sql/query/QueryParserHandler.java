@@ -90,9 +90,9 @@ public class QueryParserHandler {
 		
 		//String sql = "select * from [segments.20140902].segments where appid.s ='982da2ae92188e5f73fbf7f82e41ed65' and what.s='item' limit 1";
 		
-		//String sql = "select appid.s, count(who.s) from [events.20140909].events group by appid.s,when.d[datehistogram-5minute-(HH:mm)]";
+		//String sql = "select appid.s, count(who.s) from [events.20140909].events group by appid.s,when.d[datehistogram-5minute-(HH:mm)-{min:2014-09-09 00:00|max:2014-09-09 23:55}]";
 		
-		String sql = "select count(who.s) from [events.20140909].events,[events.2014] where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram-5minute-(HH:mm)]";
+		String sql = "select count(who.s) from [events.20140910].events,[events.2014] where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram_5minute_(yyyy-MM-dd HH:mm)_{min#2014-09-10 00:00&max#2014-09-10 23:55}]";
 		
 		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' and (when.d between '2014-09-09' and '2014-09-09') group by when.d[datehistogram-5minute-(HH:mm)]";
 		

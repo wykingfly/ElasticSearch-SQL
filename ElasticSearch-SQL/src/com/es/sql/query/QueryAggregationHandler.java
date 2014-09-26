@@ -136,8 +136,8 @@ public class QueryAggregationHandler {
 					String value = g.substring(g.indexOf("[")+1,g.indexOf("]"));
 					String[] arr = value.split("\\|");
 					if(arr.length==1){
-						System.out.println("---------arr[0]"+arr[0]);
-						String[] tmp = arr[0].split("-");
+						System.out.println("---------arr[0]="+arr[0]);
+						String[] tmp = arr[0].split("_");
 						if(tmp.length>=2){
 							//先处理垂直直方图或者时间垂直直方图
 							if("datehistogram".equals(tmp[0].trim().toLowerCase())){//时间垂直直方图
@@ -197,10 +197,67 @@ public class QueryAggregationHandler {
 								}else if(x.endsWith("year")){
 									interval = Interval.YEAR;
 								}
-								if(tmp.length==3){//tmp[2]表示格式
-									String formate = tmp[2].trim();
-									formate = formate.substring(1,formate.length()-1).trim();
-									list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval).format(formate));
+								if(tmp.length>=3){//tmp[2]表示格式
+									if(tmp.length==3){
+										if(tmp[2].startsWith("(")){
+											String formate = tmp[2].trim();
+											formate = formate.substring(1,formate.length()-1).trim();
+											list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval).format(formate));
+										}else if(tmp[2].startsWith("{")){
+											String ex = tmp[2].trim();
+											ex = ex.substring(1,ex.length()-1).trim();
+											String[] exArr = ex.split("&");
+											String min = null;
+											String max = null;
+											for(String str:exArr){
+												if(str.trim().startsWith("min")){
+													String[] tt = str.trim().split("#");
+													if(tt.length==2){
+														min = tt[1].trim();
+													}
+												}else if(str.trim().startsWith("max")){
+													String[] tt = str.trim().split("#");
+													if(tt.length==2){
+														max = tt[1].trim();
+													}
+												}
+											}
+											if(min!=null && max!=null){
+												list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval).extendedBounds(min, max).minDocCount(EsUtil.getMinDocCount()));
+											}else{
+												list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval));
+											}
+											
+										}
+									}else if(tmp.length==4){
+										String formate = tmp[2].trim();
+										formate = formate.substring(1,formate.length()-1).trim();
+										
+										String ex = tmp[3].trim();
+										ex = ex.substring(1,ex.length()-1).trim();
+										String[] exArr = ex.split("&");
+										String min = null;
+										String max = null;
+										for(String str:exArr){
+											if(str.trim().startsWith("min")){
+												String[] tt = str.trim().split("#");
+												if(tt.length==2){
+													min = tt[1].trim();
+												}
+											}else if(str.trim().startsWith("max")){
+												String[] tt = str.trim().split("#");
+												if(tt.length==2){
+													max = tt[1].trim();
+												}
+											}
+										}
+										if(min!=null && max!=null){
+											list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval).format(formate).extendedBounds(min, max).minDocCount(EsUtil.getMinDocCount()));
+										}else{
+											list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval).format(formate));
+										}
+										
+									}
 								}else{
 									list.add(AggregationBuilders.dateHistogram("datehistogram").field(field).interval(interval));
 								}

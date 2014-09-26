@@ -26,6 +26,9 @@ public class EsUtil {
 	public static long precisionThreshold = 1000;
 	public static boolean ignore_unavailable = true;
 	public static boolean allow_no_indices = true;
+	
+	public static long minDocCount = 0;
+	
 	/**
 	 * 获取客户端
 	 * @return
@@ -142,6 +145,14 @@ public class EsUtil {
 
 	public static void setAllow_no_indices(boolean allow_no_indices) {
 		EsUtil.allow_no_indices = allow_no_indices;
+	}
+
+	public static long getMinDocCount() {
+		return minDocCount;
+	}
+
+	public static void setMinDocCount(long minDocCount) {
+		EsUtil.minDocCount = minDocCount;
 	} 
 	
 	
