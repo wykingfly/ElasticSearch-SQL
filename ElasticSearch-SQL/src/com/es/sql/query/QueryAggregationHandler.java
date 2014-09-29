@@ -136,7 +136,7 @@ public class QueryAggregationHandler {
 					String value = g.substring(g.indexOf("[")+1,g.indexOf("]"));
 					String[] arr = value.split("\\|");
 					if(arr.length==1){
-						System.out.println("---------arr[0]="+arr[0]);
+						//System.out.println("---------arr[0]="+arr[0]);
 						String[] tmp = arr[0].split("_");
 						if(tmp.length>=2){
 							//先处理垂直直方图或者时间垂直直方图
@@ -289,7 +289,7 @@ public class QueryAggregationHandler {
 						RangeBuilder rg = AggregationBuilders.range(field).field(field);
 						for(int i=0;i<arr.length;i++){
 							
-							System.out.println("---------arr["+i+"]"+arr[i]);
+							//System.out.println("---------arr["+i+"]"+arr[i]);
 							
 							String[] tmp = arr[i].split("-");
 							if(tmp.length==2){

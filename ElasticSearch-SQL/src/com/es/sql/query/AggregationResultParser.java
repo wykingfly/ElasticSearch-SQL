@@ -365,7 +365,7 @@ public class AggregationResultParser {
 					String value = g.substring(g.indexOf("[")+1,g.indexOf("]"));
 					String[] arr = value.split("\\|");
 					if(arr.length==1){
-						System.out.println("---------arr[0]"+arr[0]);
+						//System.out.println("---------arr[0]"+arr[0]);
 						String[] tmp = arr[0].split("_");
 						if(tmp.length>=2){
 							//先处理垂直直方图或者时间垂直直方图
@@ -509,7 +509,7 @@ public class AggregationResultParser {
 	public static void resultParser(SearchResponse response,QuerySqlParser qsp){
 		
 		try{
-			System.out.println(response.toString());
+			//System.out.println(response.toString());
 			
 			//Terms terms = response.getAggregations().get("datehistogram");
 			

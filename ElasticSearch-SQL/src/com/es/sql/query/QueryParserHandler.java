@@ -74,13 +74,13 @@ public class QueryParserHandler {
 		
 		//String sql = "select account_number,age,balance from bank where age>25 order by balance desc";
 		
-		//String sql = "select stats(balance) from bank2.account2 group by age[histogram-5]";
+		//String sql = "select stats(balance) from bank2.account2 group by age[histogram_5]";
 		
-		//String sql = "select stats(balance) from bank2.account2 group by state,age[histogram-5]";
+		//String sql = "select stats(balance) from bank2.account2 group by state,age[histogram_5]";
 		
-		//String sql = "select stats(balance) from bank2.account2 group by createtime[datehistogram-2day]";
+		//String sql = "select stats(balance) from bank2.account2 group by createtime[datehistogram_2day]";
 		
-		//String sql = "select stats(balance) from bank2.account2 group by state,createtime[datehistogram-2day]";
+		//String sql = "select stats(balance) from bank2.account2 group by state,createtime[datehistogram_2day]";
 		
 		//String sql = "select appid.s,what.s from [segments.20140902].segments group by appid.s,what.s";
 		
@@ -90,11 +90,11 @@ public class QueryParserHandler {
 		
 		//String sql = "select * from [segments.20140902].segments where appid.s ='982da2ae92188e5f73fbf7f82e41ed65' and what.s='item' limit 1";
 		
-		//String sql = "select appid.s, count(who.s) from [events.20140909].events group by appid.s,when.d[datehistogram-5minute-(HH:mm)-{min:2014-09-09 00:00|max:2014-09-09 23:55}]";
+		//String sql = "select appid.s, count(who.s) from [events.20140909].events group by appid.s,when.d[datehistogram_5minute_(yyyy-MM-dd HH:mm)_{min:2014-09-09 00:00&max:2014-09-09 23:55}]";
 		
 		String sql = "select count(who.s) from [events.20140910].events,[events.2014] where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' group by when.d[datehistogram_5minute_(yyyy-MM-dd HH:mm)_{min#2014-09-10 00:00&max#2014-09-10 23:55}]";
 		
-		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' and (when.d between '2014-09-09' and '2014-09-09') group by when.d[datehistogram-5minute-(HH:mm)]";
+		//String sql = "select count(who.s) from [events.20140909].events where what.s='hb' and appid.s='982da2ae92188e5f73fbf7f82e41ed65' and (when.d between '2014-09-09' and '2014-09-09') group by when.d[datehistogram_5minute_(HH:mm)]";
 		
 		EsUtil.initClient(true, "elasticsearch", new String[]{"x00:9300","x01:9300"});
 		
@@ -135,7 +135,7 @@ public class QueryParserHandler {
 		}else{
 			handler_type = 1;
 		}
-		System.out.println(sql.toString());
+		//System.out.println(sql.toString());
 		
 		
 		SearchResponse searchResponse = null;
@@ -207,7 +207,7 @@ public class QueryParserHandler {
 				Map<DataType, String[]> map = CommonUtils.getValues(where, 1);
 				for(Map.Entry<DataType, String[]> entry : map.entrySet()){
 					values = entry.getValue();
-					System.out.println(values+"------------------------");
+					//System.out.println(values+"------------------------");
 				}
 				
 			}else{
@@ -410,10 +410,10 @@ public class QueryParserHandler {
 			AggregationBuilder aggregationBuilder = QueryAggregationHandler.getAggregationBuilder(qsp,filterBuilder);
 			
 			
-			System.out.println(aggregationBuilder.toString());
-			System.out.println("------------------------------------------------");
+			//System.out.println(aggregationBuilder.toString());
+			//System.out.println("------------------------------------------------");
 			if(filterBuilder!=null){
-				System.out.println(filterBuilder.toString());
+				//System.out.println(filterBuilder.toString());
 			}
 			
 			List<SortBuilder> list  = QuerySortHandler.getSortBuilder(qsp);

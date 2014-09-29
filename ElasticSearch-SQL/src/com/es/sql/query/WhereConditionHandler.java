@@ -137,14 +137,14 @@ public class WhereConditionHandler {
 			String key = entry.getKey();
 			List<String> listx = entry.getValue();
 			if(key.startsWith("1_")){
-				System.out.println("---------------------------level one -------------------");
+				//System.out.println("---------------------------level one -------------------");
 				for(String l1:listx){
-					System.out.println(l1);
+					//System.out.println(l1);
 				}
 			}else{
-				System.out.println("---------------------------level two -------------------");
+				//System.out.println("---------------------------level two -------------------");
 				for(String l2:listx){
-					System.out.println(l2);
+					//System.out.println(l2);
 				}
 			}
 		}
@@ -174,10 +174,10 @@ public class WhereConditionHandler {
 			arr[0] = whereCondition;
 		}
 		for(String str:arr){
-			System.out.println(str);
+			//System.out.println(str);
 		}
 		
-		System.out.println("-----------------------------------");
+		//System.out.println("-----------------------------------");
 		
 		StringBuffer sBuffer = new StringBuffer();
 		
@@ -211,7 +211,7 @@ public class WhereConditionHandler {
 		}
 		
 		for(String string:list){
-			System.out.println(string);
+			//System.out.println(string);
 		}
 		return list;
 	}
@@ -241,7 +241,7 @@ public class WhereConditionHandler {
 		}else if(str.indexOf(">")>0){
 			tmp = str.substring(0,str.indexOf(">")).trim();
 		}
-		System.out.println("--------getField-----"+tmp);
+		//System.out.println("--------getField-----"+tmp);
 		return tmp;
 	}
 	
