@@ -30,6 +30,10 @@ public class CommonUtils {
 			}
 		}*/
 		System.out.println(getFieldIncludeLowerUpper("(atx>=10 and atx<20)"));
+		
+		String t = "'2014-09-29'";
+		t = t.substring(1,t.lastIndexOf("'"));
+		System.out.println(t);
 	}
 	
 	public static Map<DataType, String[]> getValues(String str,int type){
@@ -96,7 +100,7 @@ public class CommonUtils {
 					}
 					dataType = RegexCheck.getDataType(t);
 					if(dataType == DataType.STRING){
-						t = t.substring(1,t.length());
+						t = t.substring(1,t.lastIndexOf("'")).trim();
 					}
 					values[i++] = t;
 				}
