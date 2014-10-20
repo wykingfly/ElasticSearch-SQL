@@ -115,4 +115,7 @@ ElasticSearch-SQL
 	histogram :实例 group by age[histogram-5]
 	
 	datehistogram ：实例 createtime[datehistogram-2day]
-
+	
+#使用的公司
+	热云科技：http://reyun.com/
+	
