@@ -73,9 +73,10 @@
 	路径：/com/es/api/test/accounts.json
 ```
 ##执行测试：
-	*/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
-	*/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
-	*其他测试类可自行修改之后测试
+
+	* /com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
+	* /com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
+	* 其他测试类可自行修改之后测试
 
 ##ElasticSearch - JAVA API 测试用例
 ```
