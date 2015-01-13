@@ -5,7 +5,7 @@ ElasticSearch-SQL
 
 #目前项目可以支持的查询如下：
 
-
+、、、
 		//String sql = "filter:select state,city,count(distinct account_number) as count from bank where gender='M' and age>10 group by state,city";
 		
 		//String sql = "filter:select state,city,sum(balance) as total from bank where gender='M' and age>10 group by state,city";
@@ -65,24 +65,26 @@ ElasticSearch-SQL
 		
 		//String sql = "select stats(balance) from bank2.account2 group by state,createtime[datehistogram-2day]";
 		
-
+、、、
 
 
 #测试数据导入
+、、、
 	路径：/com/es/api/test/accounts.json
-
+、、、
 #执行测试：
-	1、/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
-	2、/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
-	3、其他测试类可自行修改之后测试
+	*/com/es/api/test/BankMapping.java 创建index ，根据需求修改index和type
+	*/com/es/api/test/BankContentIndex.java 根据需求修改index和type，已经accounts.json路径
+	*其他测试类可自行修改之后测试
 
 #ElasticSearch - JAVA API 测试用例
+、、、
 	/com/es/sql/query/TestQuery.java
-
+、、、
 
 
 #已经支持功能如下：
-
+、、、
 	count
 	count(distinct ..)
 	sum
@@ -115,7 +117,8 @@ ElasticSearch-SQL
 	histogram :实例 group by age[histogram-5]
 	
 	datehistogram ：实例 createtime[datehistogram-2day]
-	
+、、、	
 #使用的公司
-	热云科技：http://reyun.com/
+
+	*热云科技：http://reyun.com/
 	
